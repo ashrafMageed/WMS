@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using FluentAssertions;
 using TechTalk.SpecFlow;
 using WMS.AcceptanceTests.Helpers;
+using WMS.DataStore;
 using WMS.Web.Controllers;
 using WMS.Web.Models;
 
@@ -14,14 +15,16 @@ namespace WMS.AcceptanceTests.Steps
     public class BrowseProductsSteps
     {
         private ActionResult _actionResult;
-        private IEnumerable<Product> _givenProducts;
+        private IEnumerable<Domain.Product> _givenProducts;
 
         [Given(@"I have the following products")]
         public void GivenIHaveTheFollowingProducts(Table tableOfProducts)
         {
-            _givenProducts = tableOfProducts.Rows.Select(ProductsHelper.CreateProductFrom);
-            // Create DB
-            // Add to DB
+            var db = Bootstrapper.Initialise();
+            db.Drop();
+            _givenProducts = tableOfProducts.Rows.Select(ProductsHelper.CreateDomainProductFrom);
+            var respository = new Repository(db);
+            respository.SaveAll(_givenProducts.ToList());
         }
         
         [When(@"I view products")]
@@ -34,8 +37,9 @@ namespace WMS.AcceptanceTests.Steps
         [Then(@"I should see all products")]
         public void ThenIShouldSeeAllProducts()
         {
-            var productsModel = (List<Product>)((ViewResult) _actionResult).ViewData.Model;
-            productsModel.ShouldAllBeEquivalentTo(_givenProducts);
+            var productsModel = (IEnumerable<Product>)((ViewResult) _actionResult).ViewData.Model;
+            var expectedProducts = _givenProducts.Select(ProductsHelper.MapToProductViewModel);
+            productsModel.ShouldAllBeEquivalentTo(expectedProducts);
         }
     }
 }

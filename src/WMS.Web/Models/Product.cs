@@ -1,12 +1,5 @@
-﻿using System.Collections.Generic;
-
-namespace WMS.Web.Models
+﻿namespace WMS.Web.Models
 {
-    public class Wishlist
-    {
-        public IEnumerable<Product> Products { get; set; }
-    }
-
     public class Product
     {
         public long Id { get; set; }

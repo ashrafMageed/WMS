@@ -16,7 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0BBAE2
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.InegrationTests", "WMS.InegrationTests\WMS.InegrationTests.csproj", "{6C01D375-A332-4081-9287-C93532970096}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.IntegrationTests", "WMS.InegrationTests\WMS.IntegrationTests.csproj", "{6C01D375-A332-4081-9287-C93532970096}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMS.UITests", "WMS.UITests\WMS.UITests.csproj", "{30D01C59-1979-4362-9F9D-145F03462844}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EE03F7ED-5A87-4DAF-A29D-08FC7359275F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,8 +48,17 @@ Global
 		{6C01D375-A332-4081-9287-C93532970096}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C01D375-A332-4081-9287-C93532970096}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C01D375-A332-4081-9287-C93532970096}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30D01C59-1979-4362-9F9D-145F03462844}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30D01C59-1979-4362-9F9D-145F03462844}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30D01C59-1979-4362-9F9D-145F03462844}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30D01C59-1979-4362-9F9D-145F03462844}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6080BB3F-C438-41BA-B435-E805EC4E34A4} = {EE03F7ED-5A87-4DAF-A29D-08FC7359275F}
+		{6C01D375-A332-4081-9287-C93532970096} = {EE03F7ED-5A87-4DAF-A29D-08FC7359275F}
+		{30D01C59-1979-4362-9F9D-145F03462844} = {EE03F7ED-5A87-4DAF-A29D-08FC7359275F}
 	EndGlobalSection
 EndGlobal

@@ -1,7 +1,7 @@
 ﻿Feature: BrowseProducts
 	In order to shop
 	As a customer
-	I want to be to view products
+	I want to be able to view products
 
 Background: 
 	Given I have the following products

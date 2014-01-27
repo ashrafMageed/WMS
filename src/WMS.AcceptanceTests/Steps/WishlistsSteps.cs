@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using FluentAssertions;
 using TechTalk.SpecFlow;
 using WMS.AcceptanceTests.Helpers;
+using WMS.DataStore;
 using WMS.Web.Controllers;
 using WMS.Web.Models;
 
@@ -18,9 +19,11 @@ namespace WMS.AcceptanceTests.Steps
         [Given(@"the following products")]
         public void GivenTheFollowingProducts(Table tableOfProducts)
         {
+            var db = Bootstrapper.Initialise();
+            db.DropCollection(typeof(Product).Name);
             _givenProducts = tableOfProducts.Rows.Select(ProductsHelper.CreateProductFrom);
-            // Create DB
-            // Add to DB
+            var respository = new Repository(db);
+            respository.SaveAll(_givenProducts.ToList());
         }
 
         [When(@"I Add '(.*)' to my wishlist")]

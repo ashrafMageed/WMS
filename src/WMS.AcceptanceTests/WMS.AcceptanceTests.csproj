@@ -44,6 +44,9 @@
       <Private>True</Private>
       <HintPath>..\packages\WatiN.2.1.0\lib\net40\Microsoft.mshtml.dll</HintPath>
     </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
     <Reference Include="NSubstitute">
       <HintPath>..\packages\NSubstitute.1.7.0.0\lib\NET40\NSubstitute.dll</HintPath>
     </Reference>
@@ -106,6 +109,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WMS.DataStore\WMS.DataStore.csproj">
+      <Project>{3ae43e2a-8872-4c68-8e5a-f371e8bf4414}</Project>
+      <Name>WMS.DataStore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WMS.Domain\WMS.Domain.csproj">
       <Project>{e900693f-c949-4fee-a8be-ea8c4d520c74}</Project>
       <Name>WMS.Domain</Name>

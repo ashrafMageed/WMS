@@ -19,6 +19,28 @@ namespace WMS.AcceptanceTests.Helpers
                 Description = productRow["Description"],
                 Price = decimal.Parse(productRow["Price"])
             };
+        }
+
+        public static Domain.Product CreateDomainProductFrom(TableRow productRow)
+        {
+            return new Domain.Product
+            {
+                Id = int.Parse(productRow["Id"]),
+                Name = productRow["Name"],
+                Description = productRow["Description"],
+                Price = decimal.Parse(productRow["Price"])
+            };
         } 
+
+        public static Product MapToProductViewModel(Domain.Product product)
+        {
+            return new Product
+                {
+                    Id = product.Id,
+                    Description = product.Description,
+                    Name = product.Name,
+                    Price = product.Price
+                };
+        }
     }
 }
