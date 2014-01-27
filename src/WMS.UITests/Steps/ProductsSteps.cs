@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using MongoDB.Driver;
 using TechTalk.SpecFlow;
 using WMS.DataStore;
+using WMS.Tests.Common;
 using WMS.Web.Controllers;
 using WMS.Web.Models;
 using WatiN.Core;
 using Table = TechTalk.SpecFlow.Table;
-using TableRow = TechTalk.SpecFlow.TableRow;
 
 namespace WMS.UITests.Steps
 {
@@ -16,24 +17,31 @@ namespace WMS.UITests.Steps
     {
         private IE _ie;
         private IList<Product> _givenProducts;
+        private MongoDatabase _db;
+        private const string BASE_URL = "http://localhost:62612/{0}";
+
+        [BeforeScenario]
+        public void ScenarioSetup()
+        {
+            _db = DatabaseHelper.GetTestDatabase();
+            _ie = new IE {AutoClose = true};
+        }
 
         [Given(@"I have the following products")]
         public void GivenIHaveTheFollowingProducts(Table tableOfProducts)
         {
-            _givenProducts = tableOfProducts.Rows.Select(CreateProductFrom).ToList();
-
-            var db = Bootstrapper.Initialise();
-            db.Drop();
-            var respository = new Repository(db);
+            _givenProducts = tableOfProducts.Rows.Select(ProductsHelper.CreateProductFrom).ToList();
+            var respository = new Repository(_db);
             var controller = new ProductsController(respository);
             _givenProducts.ToList().ForEach(controller.CreateProduct);
         }
 
-        [When(@"I navigate to the products page")]
-        public void WhenINavigateToTheProductsPage()
+        [When(@"I navigate to the '(.*)' page")]
+        public void WhenINavigateToThePage(string page)
         {
-            _ie = new IE("http://localhost:62612/Products");
+            _ie.GoTo(string.Format(BASE_URL, page));
         }
+
         
         [Then(@"I should see all products")]
         public void ThenIShouldSeeAllProducts()
@@ -45,15 +53,11 @@ namespace WMS.UITests.Steps
             products[2].InnerHtml.Should().Contain(_givenProducts[2].Name);
         }
 
-        public static Product CreateProductFrom(TableRow productRow)
+        [AfterScenario]
+        public void ScenarioCleanup()
         {
-            return new Product
-            {
-                Id = int.Parse(productRow["Id"]),
-                Name = productRow["Name"],
-                Description = productRow["Description"],
-                Price = decimal.Parse(productRow["Price"])
-            };
+            _db.Drop();
+            _ie.Close();
         }
     }
 }

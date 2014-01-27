@@ -46,16 +46,11 @@ namespace WMS.DataStore
     {
         const string CONNECTION_STRING = "mongodb://localhost";
 
-        public static MongoDatabase Initialise()
+        public static MongoDatabase Initialise(string databaseName)
         {
-            // Create a MongoClient object by using the connection string
             var _client = new MongoClient(CONNECTION_STRING);
-
-            //Use the MongoClient to access the server
             var server = _client.GetServer();
-
-            // Use the server to access the 'test' database
-            return server.GetDatabase("WMS");
+            return server.GetDatabase(databaseName);
         }
     }
 

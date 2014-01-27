@@ -117,6 +117,10 @@
       <Project>{e900693f-c949-4fee-a8be-ea8c4d520c74}</Project>
       <Name>WMS.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WMS.Tests.Common\WMS.Tests.Common.csproj">
+      <Project>{9A8F7960-01CA-4EDD-90BF-048E1B090FA7}</Project>
+      <Name>WMS.Tests.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WMS.Web\WMS.Web.csproj">
       <Project>{c98bfd5b-7c98-4693-a25e-44dc94b8a342}</Project>
       <Name>WMS.Web</Name>

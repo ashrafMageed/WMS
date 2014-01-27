@@ -6,6 +6,7 @@ using FluentAssertions;
 using TechTalk.SpecFlow;
 using WMS.AcceptanceTests.Helpers;
 using WMS.DataStore;
+using WMS.Tests.Common;
 using WMS.Web.Controllers;
 using WMS.Web.Models;
 
@@ -20,7 +21,7 @@ namespace WMS.AcceptanceTests.Steps
         [Given(@"I have the following products")]
         public void GivenIHaveTheFollowingProducts(Table tableOfProducts)
         {
-            var db = Bootstrapper.Initialise();
+            var db = DatabaseHelper.GetTestDatabase();
             db.Drop();
             _givenProducts = tableOfProducts.Rows.Select(ProductsHelper.CreateDomainProductFrom);
             var respository = new Repository(db);

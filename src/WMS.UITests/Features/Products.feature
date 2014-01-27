@@ -11,5 +11,5 @@ Background:
 		|	3	|	Battlefield	|	Battlefield 4			|	50		|
 
 Scenario: View Products
-	When I navigate to the products page
+	When I navigate to the 'Products' page
 	Then I should see all products
