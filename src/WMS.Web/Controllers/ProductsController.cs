@@ -12,12 +12,6 @@ namespace WMS.Web.Controllers
         private readonly IRepository _repository;
         private readonly IMapper _mapper;
 
-        public ProductsController()
-        {
-            var db = Bootstrapper.Initialise("WMS");
-            _repository = new Repository(db);
-        }
-
         public ProductsController(IRepository repository, IMapper mapper)
         {
             _repository = repository;
@@ -27,14 +21,14 @@ namespace WMS.Web.Controllers
         public ActionResult Index()
         {
             var products = _repository.GetAll<Product>();
-            var productsToDisplay = _mapper.Map<IEnumerable<Product>, IEnumerable<Models.Product>>(products);
+            var productsToDisplay = _mapper.Map<IEnumerable<Models.Product>>(products);
             return View(productsToDisplay);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateProduct(Models.Product productModel)
         {
-            var productToCreate = _mapper.Map<Models.Product, Product>(productModel);
+            var productToCreate = _mapper.Map<Models.Product>(productModel);
             _repository.Save(productToCreate);
 
             return RedirectToAction("Index");
@@ -43,7 +37,7 @@ namespace WMS.Web.Controllers
         public ActionResult GetProductsByCategory(string category)
         {
             var productsByCategory = _repository.GetAll<Product>().Where(x => x.Category == category);
-            var productModels = _mapper.Map<IEnumerable<Product>, IEnumerable<Models.Product>>(productsByCategory);
+            var productModels = _mapper.Map<IEnumerable<Models.Product>>(productsByCategory);
             return View("Index", productModels);
         }
     }
@@ -51,6 +45,7 @@ namespace WMS.Web.Controllers
     public interface IMapper
     {
         TDestination Map<TSource, TDestination>(TSource source);
+        TDestination Map<TDestination>(object data);
     }
 
     public class AutoMapperMapper : IMapper
@@ -63,6 +58,11 @@ namespace WMS.Web.Controllers
         public TDestination Map<TSource, TDestination>(TSource source)
         {
             return Mapper.Map<TSource, TDestination>(source);
+        }
+
+        public TDestination Map<TDestination>(object sourceData)
+        {
+            return Mapper.Map<TDestination>(sourceData);
         }
     }
 

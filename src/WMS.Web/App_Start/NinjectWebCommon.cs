@@ -1,6 +1,3 @@
-using WMS.DataStore;
-using WMS.Web.Controllers;
-
 [assembly: WebActivator.PreApplicationStartMethod(typeof(WMS.Web.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(WMS.Web.App_Start.NinjectWebCommon), "Stop")]
 
@@ -56,8 +53,7 @@ namespace WMS.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IMapper>().To<AutoMapperMapper>().InSingletonScope();
-            kernel.Bind<IRepository>().To<Repository>().InRequestScope().WithConstructorArgument("database", DataStore.Bootstrapper.Initialise("TestDB"));
+            kernel.Load(new WebModule());
         }        
     }
 }
