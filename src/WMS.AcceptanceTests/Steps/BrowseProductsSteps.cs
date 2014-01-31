@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using AutoMapper;
 using FluentAssertions;
 using MongoDB.Driver;
 using TechTalk.SpecFlow;
+using WMS.Common.Mappers;
 using WMS.DataStore;
 using WMS.Tests.Common;
 using WMS.Web.Controllers;
+using WMS.Web.Mappers;
 using WMS.Web.Models;
 
 namespace WMS.AcceptanceTests.Steps
@@ -37,7 +40,7 @@ namespace WMS.AcceptanceTests.Steps
         [When(@"I select '(.*)' product category")]
         public void WhenISelectProductCategory(string category)
         {
-            var productsController = new ProductsController(_repository, new AutoMapperMapper());
+            var productsController = new ProductsController(_repository, new AutoMapperMapper(new List<Profile>{new ProductModelMapperProfile()}));
             _actionResult = productsController.GetProductsByCategory(category);
         }
 

@@ -1,7 +1,11 @@
-﻿using Ninject.Modules;
+﻿using System.Configuration;
+using AutoMapper;
+using Ninject;
+using Ninject.Modules;
 using Ninject.Web.Common;
+using WMS.Common.Mappers;
 using WMS.DataStore;
-using WMS.Web.Controllers;
+using WMS.Web.Mappers;
 
 namespace WMS.Web
 {
@@ -9,8 +13,9 @@ namespace WMS.Web
     {
         public override void Load()
         {
-            Kernel.Bind<IMapper>().To<AutoMapperMapper>().InSingletonScope();
-            Kernel.Bind<IRepository>().To<Repository>().InRequestScope().WithConstructorArgument("database", DataStore.Bootstrapper.Initialise("TestDB"));
+            Kernel.Bind<Profile>().To<ProductModelMapperProfile>();
+            Kernel.Bind<IMapper>().To<AutoMapperMapper>().InSingletonScope().WithConstructorArgument("profiles", context => context.Kernel.GetAll<Profile>());
+            Kernel.Bind<IRepository>().To<Repository>().InRequestScope().WithConstructorArgument("database", DataStore.Bootstrapper.Initialise(ConfigurationManager.AppSettings["DataStore"]));
         }
     }
 }

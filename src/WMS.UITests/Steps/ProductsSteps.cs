@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using FluentAssertions;
 using MongoDB.Driver;
 using TechTalk.SpecFlow;
+using WMS.Common.Mappers;
 using WMS.DataStore;
 using WMS.Tests.Common;
 using WMS.Web.Controllers;
+using WMS.Web.Mappers;
 using WMS.Web.Models;
 using WatiN.Core;
 using Table = TechTalk.SpecFlow.Table;
@@ -31,7 +34,7 @@ namespace WMS.UITests.Steps
         public void GivenIHaveTheFollowingProducts(Table tableOfProducts)
         {
             _givenProducts = tableOfProducts.Rows.Select(ProductsHelper.CreateProductFrom).ToList();
-            var productsToSave = new AutoMapperMapper().Map<IEnumerable<Product>, IEnumerable<Domain.Product>>(_givenProducts);
+            var productsToSave = new AutoMapperMapper(new List<Profile>{new ProductModelMapperProfile()}).Map<IEnumerable<Product>, IEnumerable<Domain.Product>>(_givenProducts);
             var repository = new Repository(_db);
             repository.SaveAll(productsToSave.ToList());
         }

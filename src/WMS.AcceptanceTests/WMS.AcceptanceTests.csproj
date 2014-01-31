@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="FluentAssertions">
       <HintPath>..\packages\FluentAssertions.2.2.0.0\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
@@ -109,6 +112,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WMS.Common\WMS.Common.csproj">
+      <Project>{35E471E8-BC77-4F3A-BC1A-423E9AD0AD0E}</Project>
+      <Name>WMS.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WMS.DataStore\WMS.DataStore.csproj">
       <Project>{3ae43e2a-8872-4c68-8e5a-f371e8bf4414}</Project>
       <Name>WMS.DataStore</Name>
