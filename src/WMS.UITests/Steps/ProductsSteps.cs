@@ -31,9 +31,9 @@ namespace WMS.UITests.Steps
         public void GivenIHaveTheFollowingProducts(Table tableOfProducts)
         {
             _givenProducts = tableOfProducts.Rows.Select(ProductsHelper.CreateProductFrom).ToList();
-            var respository = new Repository(_db);
-            var controller = new ProductsController(respository);
-            _givenProducts.ToList().ForEach(controller.CreateProduct);
+            var productsToSave = new AutoMapperMapper().Map<IEnumerable<Product>, IEnumerable<Domain.Product>>(_givenProducts);
+            var repository = new Repository(_db);
+            repository.SaveAll(productsToSave.ToList());
         }
 
         [When(@"I navigate to the '(.*)' page")]

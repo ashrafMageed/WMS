@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using AutoMapper;
 using WMS.DataStore;
 using WMS.Domain;
 
@@ -8,6 +10,7 @@ namespace WMS.Web.Controllers
     public class ProductsController : Controller
     {
         private readonly IRepository _repository;
+        private readonly IMapper _mapper;
 
         public ProductsController()
         {
@@ -15,53 +18,60 @@ namespace WMS.Web.Controllers
             _repository = new Repository(db);
         }
 
-        public ProductsController(IRepository repository)
+        public ProductsController(IRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         public ActionResult Index()
         {
             var products = _repository.GetAll<Product>();
-            var productsToDisplay = products.Select(MapToProductModel);
+            var productsToDisplay = _mapper.Map<IEnumerable<Product>, IEnumerable<Models.Product>>(products);
             return View(productsToDisplay);
         }
 
-        public void CreateProduct(Models.Product productModel)
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateProduct(Models.Product productModel)
         {
-            var productToCreate = MapToProduct(productModel);
+            var productToCreate = _mapper.Map<Models.Product, Product>(productModel);
             _repository.Save(productToCreate);
-        }
 
-        public static Product MapToProduct(Models.Product productModel)
-        {
-            return new Product
-            {
-                Id = productModel.Id,
-                Description = productModel.Description,
-                Name = productModel.Name,
-                Price = productModel.Price,
-                Category = productModel.Category
-            };
-        }
-
-        public static Models.Product MapToProductModel(Product product)
-        {
-            return new Models.Product
-            {
-                Id = product.Id,
-                Description = product.Description,
-                Name = product.Name,
-                Price = product.Price,
-                Category = product.Category
-            };
+            return RedirectToAction("Index");
         }
 
         public ActionResult GetProductsByCategory(string category)
         {
             var productsByCategory = _repository.GetAll<Product>().Where(x => x.Category == category);
-            var productModels = productsByCategory.Select(MapToProductModel);
+            var productModels = _mapper.Map<IEnumerable<Product>, IEnumerable<Models.Product>>(productsByCategory);
             return View("Index", productModels);
+        }
+    }
+
+    public interface IMapper
+    {
+        TDestination Map<TSource, TDestination>(TSource source);
+    }
+
+    public class AutoMapperMapper : IMapper
+    {
+        public AutoMapperMapper()
+        {
+            Mapper.Initialize(cfg => cfg.AddProfile<ProductModelMapper>());
+        }
+
+        public TDestination Map<TSource, TDestination>(TSource source)
+        {
+            return Mapper.Map<TSource, TDestination>(source);
+        }
+    }
+
+    public class ProductModelMapper : Profile
+    {
+        protected override void Configure()
+        {
+            Mapper.CreateMap<Product, Models.Product>();
+            Mapper.CreateMap<Models.Product, Product>();
         }
     }
 }

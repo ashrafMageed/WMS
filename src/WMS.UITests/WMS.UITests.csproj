@@ -90,6 +90,10 @@
       <Project>{3AE43E2A-8872-4C68-8E5A-F371E8BF4414}</Project>
       <Name>WMS.DataStore</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WMS.Domain\WMS.Domain.csproj">
+      <Project>{E900693F-C949-4FEE-A8BE-EA8C4D520C74}</Project>
+      <Name>WMS.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WMS.Tests.Common\WMS.Tests.Common.csproj">
       <Project>{9A8F7960-01CA-4EDD-90BF-048E1B090FA7}</Project>
       <Name>WMS.Tests.Common</Name>

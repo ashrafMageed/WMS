@@ -37,7 +37,7 @@ namespace WMS.AcceptanceTests.Steps
         [When(@"I select '(.*)' product category")]
         public void WhenISelectProductCategory(string category)
         {
-            var productsController = new ProductsController(_repository);
+            var productsController = new ProductsController(_repository, new AutoMapperMapper());
             _actionResult = productsController.GetProductsByCategory(category);
         }
 
