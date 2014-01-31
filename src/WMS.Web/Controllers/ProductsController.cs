@@ -23,7 +23,7 @@ namespace WMS.Web.Controllers
         public ActionResult Index()
         {
             var products = _repository.GetAll<Product>();
-            var productsToDisplay = products.Select(product => new Models.Product { Id = product.Id, Description = product.Description, Name = product.Name, Price = product.Price });
+            var productsToDisplay = products.Select(MapToProductModel);
             return View(productsToDisplay);
         }
 
@@ -40,8 +40,28 @@ namespace WMS.Web.Controllers
                 Id = productModel.Id,
                 Description = productModel.Description,
                 Name = productModel.Name,
-                Price = productModel.Price
+                Price = productModel.Price,
+                Category = productModel.Category
             };
+        }
+
+        public static Models.Product MapToProductModel(Product product)
+        {
+            return new Models.Product
+            {
+                Id = product.Id,
+                Description = product.Description,
+                Name = product.Name,
+                Price = product.Price,
+                Category = product.Category
+            };
+        }
+
+        public ActionResult GetProductsByCategory(string category)
+        {
+            var productsByCategory = _repository.GetAll<Product>().Where(x => x.Category == category);
+            var productModels = productsByCategory.Select(MapToProductModel);
+            return View("Index", productModels);
         }
     }
 }

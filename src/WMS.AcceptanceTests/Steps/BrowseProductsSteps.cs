@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using FluentAssertions;
+using MongoDB.Driver;
 using TechTalk.SpecFlow;
-using WMS.AcceptanceTests.Helpers;
 using WMS.DataStore;
 using WMS.Tests.Common;
 using WMS.Web.Controllers;
@@ -17,30 +16,44 @@ namespace WMS.AcceptanceTests.Steps
     {
         private ActionResult _actionResult;
         private IEnumerable<Domain.Product> _givenProducts;
+        private MongoDatabase _db;
+        private IRepository _repository;
+
+        [BeforeScenario]
+        public void ScenarioSetup()
+        {
+            _db = DatabaseHelper.GetTestDatabase();
+            _db.Drop();
+        }
 
         [Given(@"I have the following products")]
         public void GivenIHaveTheFollowingProducts(Table tableOfProducts)
         {
-            var db = DatabaseHelper.GetTestDatabase();
-            db.Drop();
             _givenProducts = tableOfProducts.Rows.Select(ProductsHelper.CreateDomainProductFrom);
-            var respository = new Repository(db);
-            respository.SaveAll(_givenProducts.ToList());
+            _repository = new Repository(_db);
+            _repository.SaveAll(_givenProducts.ToList());
         }
-        
-        [When(@"I view products")]
-        public void WhenIViewProducts()
+
+        [When(@"I select '(.*)' product category")]
+        public void WhenISelectProductCategory(string category)
         {
-            var productsController = new ProductsController();
-            _actionResult = productsController.Index();
+            var productsController = new ProductsController(_repository);
+            _actionResult = productsController.GetProductsByCategory(category);
         }
-        
-        [Then(@"I should see all products")]
-        public void ThenIShouldSeeAllProducts()
+
+        [Then(@"I should see")]
+        public void ThenIShouldSee(Table expectedProductsTable)
         {
-            var productsModel = (IEnumerable<Product>)((ViewResult) _actionResult).ViewData.Model;
-            var expectedProducts = _givenProducts.Select(ProductsHelper.MapToProductViewModel);
+            var productsModel = (IEnumerable<Product>)((ViewResult)_actionResult).ViewData.Model;
+            var expectedProducts = expectedProductsTable.Rows.Select(ProductsHelper.CreateProductFrom);
             productsModel.ShouldAllBeEquivalentTo(expectedProducts);
         }
+
+        [AfterScenario]
+        public void ScenarioCleanup()
+        {
+            _db.Drop();
+        }
+
     }
 }

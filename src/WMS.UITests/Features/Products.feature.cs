@@ -71,22 +71,26 @@ namespace WMS.UITests.Features
                         "Id",
                         "Name",
                         "Description",
-                        "Price"});
+                        "Price",
+                        "Category"});
             table1.AddRow(new string[] {
                         "1",
                         "PS4",
                         "New PS4 Console",
-                        "350"});
+                        "350",
+                        "Console"});
             table1.AddRow(new string[] {
                         "2",
                         "XBOX One",
                         "New Xbox One Console",
-                        "430"});
+                        "430",
+                        "Console"});
             table1.AddRow(new string[] {
                         "3",
                         "Battlefield",
                         "Battlefield 4",
-                        "50"});
+                        "50",
+                        "Game"});
 #line 7
  testRunner.Given("I have the following products", ((string)(null)), table1, "Given ");
 #line hidden

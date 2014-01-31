@@ -14,7 +14,8 @@ namespace WMS.Tests.Common
                 Id = int.Parse(productRow["Id"]),
                 Name = productRow["Name"],
                 Description = productRow["Description"],
-                Price = decimal.Parse(productRow["Price"])
+                Price = decimal.Parse(productRow["Price"]),
+                Category = productRow["Category"]
             };
         }
 
@@ -25,7 +26,8 @@ namespace WMS.Tests.Common
                 Id = int.Parse(productRow["Id"]),
                 Name = productRow["Name"],
                 Description = productRow["Description"],
-                Price = decimal.Parse(productRow["Price"])
+                Price = decimal.Parse(productRow["Price"]),
+                Category = productRow["Category"]
             };
         }
 
@@ -36,7 +38,8 @@ namespace WMS.Tests.Common
                 Id = product.Id,
                 Description = product.Description,
                 Name = product.Name,
-                Price = product.Price
+                Price = product.Price,
+                Category = product.Category
             };
         }
     }

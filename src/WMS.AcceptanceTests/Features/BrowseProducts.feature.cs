@@ -34,7 +34,7 @@ namespace WMS.AcceptanceTests.Features
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "BrowseProducts", "In order to shop\r\nAs a customer\r\nI want to be able to view products", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "BrowseProducts", "In order to shop\r\nAs a customer\r\nI want to be able to browse products", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -71,22 +71,26 @@ namespace WMS.AcceptanceTests.Features
                         "Id",
                         "Name",
                         "Description",
-                        "Price"});
+                        "Price",
+                        "Category"});
             table1.AddRow(new string[] {
                         "1",
                         "PS4",
                         "New PS4 Console",
-                        "350"});
+                        "350",
+                        "Console"});
             table1.AddRow(new string[] {
                         "2",
                         "XBOX One",
                         "New Xbox One Console",
-                        "430"});
+                        "430",
+                        "Console"});
             table1.AddRow(new string[] {
                         "3",
                         "Battlefield",
                         "Battlefield 4",
-                        "50"});
+                        "50",
+                        "Game"});
 #line 7
  testRunner.Given("I have the following products", ((string)(null)), table1, "Given ");
 #line hidden
@@ -103,18 +107,37 @@ namespace WMS.AcceptanceTests.Features
         
         [Xunit.FactAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "BrowseProducts")]
-        [Xunit.TraitAttribute("Description", "Show all products")]
-        public virtual void ShowAllProducts()
+        [Xunit.TraitAttribute("Description", "Browse products by category")]
+        public virtual void BrowseProductsByCategory()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Show all products", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Browse products by category", ((string[])(null)));
 #line 13
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
 #line 14
- testRunner.When("I view products", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I select \'Console\' product category", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Id",
+                        "Name",
+                        "Description",
+                        "Price",
+                        "Category"});
+            table2.AddRow(new string[] {
+                        "1",
+                        "PS4",
+                        "New PS4 Console",
+                        "350",
+                        "Console"});
+            table2.AddRow(new string[] {
+                        "2",
+                        "XBOX One",
+                        "New Xbox One Console",
+                        "430",
+                        "Console"});
 #line 15
- testRunner.Then("I should see all products", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I should see", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
