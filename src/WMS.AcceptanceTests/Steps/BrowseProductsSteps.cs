@@ -52,6 +52,14 @@ namespace WMS.AcceptanceTests.Steps
             productsModel.ShouldAllBeEquivalentTo(expectedProducts);
         }
 
+        [When(@"I filter products by a price range from '(.*)' to '(.*)'")]
+        public void WhenIFilterProductsByAPriceRangeFromTo(decimal minimumPrice, decimal maximumPrice)
+        {
+            var productsController = new ProductsController(_repository, new AutoMapperMapper(new List<Profile> { new ProductModelMapperProfile() }));
+            _actionResult = productsController.GetProductsByPriceRange(minimumPrice, maximumPrice);
+        }
+
+
         [AfterScenario]
         public void ScenarioCleanup()
         {

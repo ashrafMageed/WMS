@@ -142,6 +142,43 @@ this.FeatureBackground();
             this.ScenarioCleanup();
         }
         
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "BrowseProducts")]
+        [Xunit.TraitAttribute("Description", "Browse products by price range")]
+        public virtual void BrowseProductsByPriceRange()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Browse products by price range", ((string[])(null)));
+#line 20
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 21
+ testRunner.When("I filter products by a price range from \'50\' to \'400\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Id",
+                        "Name",
+                        "Description",
+                        "Price",
+                        "Category"});
+            table3.AddRow(new string[] {
+                        "1",
+                        "PS4",
+                        "New PS4 Console",
+                        "350",
+                        "Console"});
+            table3.AddRow(new string[] {
+                        "3",
+                        "Battlefield",
+                        "Battlefield 4",
+                        "50",
+                        "Game"});
+#line 22
+ testRunner.Then("I should see", ((string)(null)), table3, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable

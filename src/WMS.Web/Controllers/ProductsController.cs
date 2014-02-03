@@ -40,6 +40,12 @@ namespace WMS.Web.Controllers
             var productModels = _mapper.Map<IEnumerable<Models.Product>>(productsByCategory);
             return View("Index", productModels);
         }
+
+        public ActionResult GetProductsByPriceRange(decimal minimumPrice, decimal maximumPrice)
+        {
+            var productsByPriceRange = _repository.GetAll<Product>().Where(x => x.Price >= minimumPrice && x.Price <= maximumPrice);
+            return View("Index", _mapper.Map<IEnumerable<Models.Product>>(productsByPriceRange));
+        }
     }
 }
 
