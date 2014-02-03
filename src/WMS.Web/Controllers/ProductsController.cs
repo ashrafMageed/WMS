@@ -25,14 +25,14 @@ namespace WMS.Web.Controllers
             return View(productsToDisplay);
         }
 
-//        [AcceptVerbs(HttpVerbs.Post)]
-//        public ActionResult CreateProduct(Models.Product productModel)
-//        {
-//            var productToCreate = _mapper.Map<Models.Product>(productModel);
-//            _repository.Save(productToCreate);
-//
-//            return RedirectToAction("Index");
-//        }
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateProduct(Models.Product productModel)
+        {
+            var productToCreate = _mapper.Map<Product>(productModel);
+            _repository.Save(productToCreate);
+
+            return RedirectToAction("Index");
+        }
 
         public ActionResult GetProductsByCategory(string category)
         {
@@ -46,6 +46,7 @@ namespace WMS.Web.Controllers
             var productsByPriceRange = _repository.GetAll<Product>().Where(x => x.Price >= minimumPrice && x.Price <= maximumPrice);
             return View("Index", _mapper.Map<IEnumerable<Models.Product>>(productsByPriceRange));
         }
+
     }
 }
 

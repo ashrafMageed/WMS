@@ -7,11 +7,13 @@ namespace WMS.Tests.Common
 {
     public static class ProductsHelper
     {
+        // need to manage IDs in MongoDB
+
         public static Product CreateProductFrom(TableRow productRow)
         {
             return new Product
             {
-                Id = int.Parse(productRow["Id"]),
+                Id = productRow.ContainsKey("Id") ? 9 : int.Parse(productRow["Id"]),
                 Name = productRow["Name"],
                 Description = productRow["Description"],
                 Price = decimal.Parse(productRow["Price"]),
@@ -23,7 +25,7 @@ namespace WMS.Tests.Common
         {
             return new Domain.Product
             {
-                Id = int.Parse(productRow["Id"]),
+                Id = productRow.ContainsKey("Id") ? 9 : int.Parse(productRow["Id"]),
                 Name = productRow["Name"],
                 Description = productRow["Description"],
                 Price = decimal.Parse(productRow["Price"]),

@@ -80,6 +80,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BrowseProducts.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\ManageProducts.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ManageProducts.feature</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\ProductsHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Features\SpecFlowFeature1.feature.cs">
@@ -93,6 +98,7 @@
       <DependentUpon>Wishlists.feature</DependentUpon>
     </Compile>
     <Compile Include="Steps\BrowseProductsSteps.cs" />
+    <Compile Include="Steps\ManageProductsSteps.cs" />
     <Compile Include="Steps\WishlistsSteps.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +106,10 @@
     <None Include="Features\BrowseProducts.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>BrowseProducts.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\ManageProducts.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ManageProducts.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="Features\SpecFlowFeature1.feature">

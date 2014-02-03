@@ -20,6 +20,6 @@ Scenario: Browse products by category
 Scenario: Browse products by price range
 	When I filter products by a price range from '50' to '400'
 	Then I should see
-			| Id | Name			| Description          | Price | Category |
-			| 1  | PS4			| New PS4 Console      | 350   | Console  |
-			| 3  | Battlefield	| Battlefield 4     | 50    | Game     |
+			| Id | Name			| Description			| Price | Category |
+			| 1  | PS4			| New PS4 Console		| 350   | Console  |
+			| 3  | Battlefield	| Battlefield 4			| 50    | Game     |
